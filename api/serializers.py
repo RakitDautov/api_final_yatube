@@ -34,11 +34,6 @@ class FollowerSerializer(serializers.ModelSerializer):
         queryset=User.objects.all()
     )
 
-    def validate_following(self, data):
-        if data == self.context['request'].user:
-            raise serializers.ValidationError()
-        return data
-
     class Meta:
         fields = '__all__'
         model = Follow
@@ -48,6 +43,11 @@ class FollowerSerializer(serializers.ModelSerializer):
                 fields=['user', 'following']
             )
         ]
+
+    def validate_following(self, data):
+        if data == self.context['request'].user:
+            raise serializers.ValidationError()
+        return data
 
 
 class GroupSerializer(serializers.ModelSerializer):

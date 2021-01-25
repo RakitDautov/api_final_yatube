@@ -15,7 +15,3 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('', include(router_v1.urls))
 ]
-
-
-urlpatterns = [
-]
