@@ -26,7 +26,7 @@ class PostViewSet(viewsets.ModelViewSet):
     permission_classes = [IsOwnerOrReadOnly]
     queryset = Post.objects.all()
     filterset_fields = ('group',)
-    filter_backends = [IsOwnerOrReadOnly]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -50,7 +50,7 @@ class FollowViewSet(viewsets.ModelViewSet):
 class GroupViewSet(mixins.CreateModelMixin,
                              mixins.ListModelMixin,
                              viewsets.GenericViewSet):
-    serializer_classes = GroupSerializer
+    serializer_class = GroupSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Group.objects.all()
     search_fields = ['user__username']
